@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>linux学习</title>
+    <url>/2023/11/28/linux/</url>
+    <content><![CDATA[<h2 id="Linux学习"><a href="#Linux学习" class="headerlink" title="Linux学习"></a>Linux学习</h2><h4 id="1-安装Centos"><a href="#1-安装Centos" class="headerlink" title="1.安装Centos"></a>1.安装Centos</h4><p><img src="https://pic.imgdb.cn/item/6564c900c458853aef8ebe5d.jpg"></p>
+<p>网络连接的三种模式：桥接模式、NAT模式、主机模式三者的区别</p>
+<p><img src="https://pic.imgdb.cn/item/6564c8dbc458853aef8e506f.jpg"></p>
+<h4 id="2-虚拟机克隆："><a href="#2-虚拟机克隆：" class="headerlink" title="2.虚拟机克隆："></a>2.虚拟机克隆：</h4><p>如果已经安装了一台linux操作系统，但是还想装更多的时候，没必要再重新安装，只需要克隆即可，克隆可以复制出一样的虚拟机，连用户名和密码也会直接克隆。</p>
+<h4 id="3-虚拟机快照："><a href="#3-虚拟机快照：" class="headerlink" title="3.虚拟机快照："></a>3.虚拟机快照：</h4><p>如果再使用虚拟机系统的时候，想回到原先的某一个状态，也就是说担心可能有些误操作造成系统异常，需要回到原先某个正常的状态，就叫快照管理。</p>
+<h4 id="4-Linux目录结构"><a href="#4-Linux目录结构" class="headerlink" title="4.Linux目录结构"></a>4.Linux目录结构</h4><p>linux的文件系统是采用层式的树状目录结构，在此结构中的最上层是跟目录”&#x2F;“，然后在此目录下再创建其他的目录。</p>
+<p>&#x2F;bin   [<strong>常用</strong>]  ：是Binary的缩写，这个目录存放着最经常使用的命令。</p>
+<p>&#x2F;sbin  :   s是Super User的意思，这里存放的是系统管理员使用的系统管理程序</p>
+<p>&#x2F;home [<strong>常用</strong>] ：存放普通用户的主目录，在Linux中每个用户都有一个自己的目录，一般该目录名是以用户的账号命名。</p>
+<p>&#x2F;root  [<strong>常用</strong>]  ：该目录为系统管理员，也称作超级权限者的用户主目录</p>
+<p>&#x2F;lib ：系统开机所需最基本的动态连接共享库，其作用类似于Windows里的DLL文件，几乎所有的应用程序都需要用到这些共享库。</p>
+<p>&#x2F;lost+found ：这个目录一般情况下是空的，当系统非法关机后，这里存放了一些文件</p>
+<p>&#x2F;etc  [<strong>常用</strong>] ：所有的系统管理所需的配置文件和子目录，比如安装了MySQL数据库，那么MySQL的配置文件my.conf就会在这个文件夹下。</p>
+<p>&#x2F;usr [<strong>常用</strong>] ：这是一个非常重要的目录，用户的很多应用程序和文件都放在这个目录下，类似于Windows下的Program files目录。</p>
+<p>&#x2F;boot [<strong>常用</strong>] ： 存放的是启动Linux时使用的一些核心文件，包括一些连接文件以及镜像文件。</p>
+<p>&#x2F;dev  ：类似于windows的设备管理器，把所有的的硬件用文件的形式存储。</p>
+<p>&#x2F;media [<strong>常用</strong>] ：linux系统会自动识别一些设备，例如U盘、光驱等等，当识别后，linux会把识别的设备挂载到这个目录下。</p>
+<p>&#x2F;mnt [<strong>常用</strong>] ：系统提供该目录是为了让用户临时挂载别的文件系统的，我们可以将外部的存储挂载在&#x2F;mnt&#x2F;上，然后进入该母乳就可以查看里面的内容了。</p>
+<p>&#x2F;opt ：这是给主机额外安装软件所*<u>存放的目录</u>*。如安装Oracle数据库就可以先将安装包放着这个目录里。</p>
+<p>&#x2F;usr&#x2F;local [<strong>常用</strong>] : 这是另一个给主机额外安装软件所*<u>安装的目录</u>*。一般是通过编译源码的方式安装的程序。</p>
+<p>&#x2F;var [<strong>常用</strong>] ： 这个目录中存放着在不断扩充着的东西，习惯将经常被修改的目录放在这个目录下。包括各种日志文件。</p>
+<p><img src="https://pic.imgdb.cn/item/6564c5bcc458853aef849141.jpg"></p>
+<p><em><strong>在Linux世界里，一切皆文件！！</strong></em>  怎么理解呢？例如：在安装Centos的时候，我们有进行分配CPU，我们可以打开&#x2F;dev&#x2F;cpu    中可以找到cpu所对应生成的文件夹，这个文件夹的数量和分配的个数相同。</p>
+<p><img src="https://pic.imgdb.cn/item/6564c5d0c458853aef84d76e.jpg"></p>
+<p>当Windows连接的是无线网络时候，网络要设置成桥接模式才能进行上网。但我遇到了，即使切换成桥接模式，但是Linux还是没有网络，在有Linux系统的右上角位置，打开有线连接。即可上网。<br><img src="https://pic.imgdb.cn/item/65661296c458853aef16137a.jpg"></p>
+<p><img src="https://pic.imgdb.cn/item/656612d8c458853aef170467.jpg"><br><strong>正常模式</strong>：以Vim打开一个文件就直接进入一般模式了（这就是默认的模式）。在这个模式中，你可以使用【上下左右】按键来移动光标，可以使用【删除字符】或【删除整行】来处理文件内容，也可以使用【复制、粘贴】来处理文件内容。</p>
+<p><strong>插入模式</strong>：按下i,I,o,O,a,A,r,R等任何一个字母之后才会进入编辑模式，一般按i即可</p>
+<p><strong>命令行模式</strong>：在这个模式中，可以提供相关指令，完成读取、存盘、替换、离开Vim、显示行号等动作。</p>
+<p><img src="https://pic.imgdb.cn/item/656612f6c458853aef1776ed.jpg"></p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>命令行</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java基础</title>
+    <url>/2023/11/22/java/</url>
+    <content><![CDATA[<h1 id="八大基本类型"><a href="#八大基本类型" class="headerlink" title="八大基本类型"></a>八大基本类型</h1><p><img src="https://pic.imgdb.cn/item/656156bfc458853aef59bc3d.jpg"></p>
+<h2 id="1-自动类型提升-当容量小的数据类型的变量与容量大的数据类型的变量做运算时，结果自动提升为容量大的数据类型。"><a href="#1-自动类型提升-当容量小的数据类型的变量与容量大的数据类型的变量做运算时，结果自动提升为容量大的数据类型。" class="headerlink" title="1.自动类型提升:当容量小的数据类型的变量与容量大的数据类型的变量做运算时，结果自动提升为容量大的数据类型。"></a>1.自动类型提升:当容量小的数据类型的变量与容量大的数据类型的变量做运算时，结果自动提升为容量大的数据类型。</h2><p>byte、short、char–&gt;int–&gt;long–&gt;float–&gt;double</p>
+<h3 id="特别的：当byte、char、short三种类型的变量做运算时，结果为int型"><a href="#特别的：当byte、char、short三种类型的变量做运算时，结果为int型" class="headerlink" title="特别的：当byte、char、short三种类型的变量做运算时，结果为int型"></a>特别的：当byte、char、short三种类型的变量做运算时，结果为int型</h3><p>说明：此时的容量大小指的是，表示数的范围的大和小。int(-2^31<del>2^31-1)  &gt; short(-2^7</del>2^7-1)</p>
+<h2 id="2-强制类型转换-自动类型转换的逆运算。"><a href="#2-强制类型转换-自动类型转换的逆运算。" class="headerlink" title="2.强制类型转换:自动类型转换的逆运算。"></a>2.强制类型转换:自动类型转换的逆运算。</h2><p>1.需要使用强制转换符()</p>
+<p>2.注意点：强制类型转换，可能导致精度损失。   </p>
+<h1 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h1><h2 id="1-面向过程和面向对象的区别"><a href="#1-面向过程和面向对象的区别" class="headerlink" title="1.面向过程和面向对象的区别"></a>1.面向过程和面向对象的区别</h2><p>面向过程：强调的是功能行为，以函数为最小单位，考虑怎么做。</p>
+<p>面向对象：强调具备了功能的对象，以类&#x2F;对象为最小单位，考虑谁来做。</p>
+<p>例子：一个公司从小发展到大公司的过程(面向过程—-&gt;面向对象)</p>
+<h2 id="2-类（Class）和对象（Object）"><a href="#2-类（Class）和对象（Object）" class="headerlink" title="2.类（Class）和对象（Object）"></a>2.类（Class）和对象（Object）</h2><p>类是对一类事物的描述，是<strong>抽象的</strong>、概念上的定义。例如：人类</p>
+<p>对象是<strong>实际存在的</strong>该类事物的每个个体，因而也称为实例。例如：温志浩</p>
+<h2 id="3-类中常见的成员有："><a href="#3-类中常见的成员有：" class="headerlink" title="3.类中常见的成员有："></a>3.类中常见的成员有：</h2><p>属性（field）：对应类中的<strong>成员变量</strong>。</p>
+<p>方法（method）：对应类中的<strong>成员方法</strong>。</p>
+<p>构造器（constructor）    作用：创建对象、初始化对象信息。</p>
+<p>……….</p>
+<h2 id="4-面向对象特征："><a href="#4-面向对象特征：" class="headerlink" title="4.面向对象特征："></a>4.面向对象特征：</h2><p>问题的引入：当我们创建一个对象以后，可以通过对象.属性的方式进行赋值。例如：我们给人类的对象的年龄属性进行赋值的时候，需要加入年龄不能小于0的条件，即要添加约束的条件。我们无法在属性的声明时期直接进行添加约束条件，所以引入封装。</p>
+<h3 id="封装性的体现：（封装性是一个很广的概念，以下每一种都是封装性的体现）"><a href="#封装性的体现：（封装性是一个很广的概念，以下每一种都是封装性的体现）" class="headerlink" title="封装性的体现：（封装性是一个很广的概念，以下每一种都是封装性的体现）"></a>封装性的体现：（封装性是一个很广的概念，以下每一种都是封装性的体现）</h3><ol>
+<li>我们将类的属性私有化(private)，同时提供公共的(public方法来获取(get)和设置(set)  </li>
+<li>不对外暴露的私有的方法。</li>
+<li>单例模式</li>
+<li>……</li>
+</ol>
+<p>问题的引入：当我们创建出了一个银行卡对象的时候，银行卡可以分为储蓄卡、信用卡。但是它们的属性和方法有很多是相同的，那么我们就要在分别的各自的类中又写一样的属性和方法。在增加一种卡型的时候也要再写一遍相同的属性和方法。代码的复用性太低。所以我们引入继承。</p>
+<h3 id="继承性：从已有的类中派生出新的类，新的类能吸收已有类的数据属性和行为，并能扩展新的能力。"><a href="#继承性：从已有的类中派生出新的类，新的类能吸收已有类的数据属性和行为，并能扩展新的能力。" class="headerlink" title="继承性：从已有的类中派生出新的类，新的类能吸收已有类的数据属性和行为，并能扩展新的能力。"></a>继承性：从已有的类中派生出新的类，新的类能吸收已有类的数据属性和行为，并能扩展新的能力。</h3><ol>
+<li>一旦子类A继承父类B以后，子类A中获取了父类B中的所有的属性和方法。就算父类中是private的属性和方法，子类继承父类以后，仍然认为获取了父类中私有的结构。只有因为封装性的影响，导致子类不能直接调用父类的结构而已。</li>
+<li>子类继承父类以后，还可以声明自己特有的方法或属性，实现功能的扩展。</li>
+</ol>
+<h3 id="多态性：对象的多态性：父类的引用指向子类型的对象-Person-p-new-Man-当我们new对象的时候，前面是父类，后面可以是子类。"><a href="#多态性：对象的多态性：父类的引用指向子类型的对象-Person-p-new-Man-当我们new对象的时候，前面是父类，后面可以是子类。" class="headerlink" title="多态性：对象的多态性：父类的引用指向子类型的对象(Person p&#x3D;new Man();)当我们new对象的时候，前面是父类，后面可以是子类。"></a>多态性：对象的多态性：父类的引用指向子类型的对象(Person p&#x3D;new Man();)当我们new对象的时候，前面是父类，后面可以是子类。</h3><ol>
+<li>多态的使用：当调用子父类同名的参数方法时，<strong>实际执行的是子类重写父类的方法</strong>。（我们在编译期，只能调用父类中声明的方法，但在运行期，我们执行的是子类重写父类的方法。总结：编译，看左边；运行，看右边。）</li>
+<li>多态使用的前提：1.类的继承关系   2.方法重写（如果你子类中不重写父类的方法，那么不如直接new 父类）<br><img src="https://pic.imgdb.cn/item/6561543ac458853aef526649.jpg"><br>若我们没有多态性，那么这个方法中需要的是Animal类，那么就只能放animal的对象进去。当我们想放猫的时候，又要在写一个需要的是Cat类的方法，需要的是Dog类又要另外写一个方法。这也就是多态的优点。<br>3.对象的多态性，只适用于方法，不适用于属性。（编译期和运行期都看左边）</li>
+</ol>
+<h2 id="抽象类：随着继承层次中一个个新子类的定义，子类变得越来越具体，而父类则更一般，更通用。慢慢的这个类就不在用来实例化了。"><a href="#抽象类：随着继承层次中一个个新子类的定义，子类变得越来越具体，而父类则更一般，更通用。慢慢的这个类就不在用来实例化了。" class="headerlink" title="抽象类：随着继承层次中一个个新子类的定义，子类变得越来越具体，而父类则更一般，更通用。慢慢的这个类就不在用来实例化了。"></a>抽象类：随着继承层次中一个个新子类的定义，子类变得越来越具体，而父类则更一般，更通用。慢慢的这个类就不在用来实例化了。</h2><p>例子：一个公司从小规模的时候老板做很多事情，后来公司变大了，老板慢慢就做的事情少了。此时老板就是抽象类。</p>
+<ol>
+<li>abstract：抽象的</li>
+<li>abstract可以用来修饰类和方法</li>
+<li>abstract修饰的类：<strong>抽象类</strong><ol>
+<li>此类不能实例化</li>
+<li>抽象类中一定有构造器（虽然自己以及不能new对象了，但是子类在new对象的时候，必须通过父类的构造器）</li>
+<li>必须提供抽象类的子类，让子类对象实例化。（不然抽象类本来就不能造对象，还没有子类。这用来干嘛呢？</li>
+</ol>
+</li>
+<li>abstract修饰方法：<strong>抽象方法</strong><ol>
+<li>抽象放只有方法的声明，没有方法体。（参考接口）</li>
+<li>包含抽象方法的类必须是抽象类。但抽象类中可以没有抽象方法。</li>
+<li>若子类不为抽象类，那么就必须重写所有父类（无论直接、间接父类）中的抽象方法。</li>
+</ol>
+</li>
+</ol>
+<p>问题引入：在Java中，只能够单继承，那么能实现的功能就变得很少，比如：篮球运动员和足球运动员都有了运动员继承了运动员这个父类。语文课代表和数学课代表都继承了班委这个父类。但是它们又还有学生这个类，那我们又不能进行继承。所以引入接口概念。接口可以多实现。<br><img src="https://pic.imgdb.cn/item/656154d8c458853aef5444b4.jpg"></p>
+<h2 id="接口："><a href="#接口：" class="headerlink" title="接口："></a>接口：</h2><ol>
+<li>接口使用interface来定义</li>
+<li>接口中有：全局常量、抽象方法</li>
+<li>接口中不能定义构造器的</li>
+<li>实现类要实现接口中的所有方法。</li>
+<li>重写和实现：对接口或抽象类中中有方法体的方法叫重写，对没有方法体的方法叫实现</li>
+<li>可以多实现–》弥补了单继承的局限</li>
+</ol>
+<h3 id="接口和抽象类的对比："><a href="#接口和抽象类的对比：" class="headerlink" title="接口和抽象类的对比："></a>接口和抽象类的对比：</h3><p>相似点：</p>
+<ol>
+<li>接口和抽象类都不能被实例化。</li>
+<li>接口和抽象类都可以包含抽象方法</li>
+</ol>
+<p>不同点：</p>
+<ol>
+<li>接口里<strong>只能包含抽象方法</strong>，抽象类则可以包含<strong>普通方法</strong></li>
+<li>抽象类中的成员变量可以是各种类型的，接口中的成员变量只能常量</li>
+<li>接口不能包含构造器，抽象类可以包含<strong>构造器</strong></li>
+<li><strong>一个类只能继承一个抽象类，而一个类却可以实现多个接口。</strong></li>
+</ol>
+<h2 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h2><h3 id="程序：一段静态的代码"><a href="#程序：一段静态的代码" class="headerlink" title="程序：一段静态的代码"></a>程序：一段静态的代码</h3><h3 id="进程：正在运行的一个程序。是一个动态的过程。"><a href="#进程：正在运行的一个程序。是一个动态的过程。" class="headerlink" title="进程：正在运行的一个程序。是一个动态的过程。"></a>进程：正在运行的一个程序。是一个动态的过程。</h3><p>系统在运行时会为每个进程分配不同的内存区域。</p>
+<h3 id="线程：进程可以进一步细分为线程，是一个程序内部的一条执行路径。"><a href="#线程：进程可以进一步细分为线程，是一个程序内部的一条执行路径。" class="headerlink" title="线程：进程可以进一步细分为线程，是一个程序内部的一条执行路径。"></a>线程：进程可以进一步细分为线程，是一个程序内部的一条执行路径。</h3><p>每个线程拥有独立的运行栈和和程序计数器。<br><img src="https://pic.imgdb.cn/item/6561555bc458853aef55bad2.jpg"></p>
+<h3 id="多线程的创建："><a href="#多线程的创建：" class="headerlink" title="多线程的创建："></a>多线程的创建：</h3><ol>
+<li>继承Thread类<ol>
+<li>创建一个继承于Thread类的子类</li>
+<li>重写Thread类的run()</li>
+<li>创建Thread类的<strong>子类对象</strong></li>
+<li>通过此对象调用start()</li>
+</ol>
+</li>
+<li>实现Runnable接口<ol>
+<li>创建一个实现了Runnable接口的类</li>
+<li>实现类去实现Runnable中的抽象方法：run()</li>
+<li>创建实现类的对象</li>
+<li><strong>将此对象作为参数传递到Thread类的构造器中，创建Thread类的对象。</strong>(这个和继承的方式不同)</li>
+<li>通过Thread类的对象调用start()</li>
+</ol>
+</li>
+<li>实现Callable<ol>
+<li>最大的区别，runnable没有返回值，而实现callable接口的任务线程能返回执行结果</li>
+<li>callable接口实现类中的run方法允许异常向上抛出，可以在内部处理，try catch，但是runnable接口实现类中run方法的异常必须在内部处理，不能抛出</li>
+</ol>
+</li>
+</ol>
+<h3 id="线程的生命周期："><a href="#线程的生命周期：" class="headerlink" title="线程的生命周期："></a>线程的生命周期：</h3><p><img src="https://pic.imgdb.cn/item/65615579c458853aef560fb5.jpg"></p>
+<h2 id="类加载器："><a href="#类加载器：" class="headerlink" title="类加载器："></a>类加载器：</h2><p>bootstrap ClassLoader（启动类加载器）是ExtClassLoader的父类加载器，负责加载核心类库</p>
+<p>ExtClassLoader（扩展类加载器）是AppClassLoader的父类加载器，负责加载ext文件夹在的类库</p>
+<p>AppClassLoader(系统类加载器)是负责加载classpath下的类文件。</p>
+<h2 id="双亲委派"><a href="#双亲委派" class="headerlink" title="双亲委派:"></a>双亲委派:</h2><p>如果一个类加载器收到了类加载请求，它并不会自己先去加载，而是把这个请求委托给父类的加载器去执行，如果父类加载器还存在其父类加载器，则进一步向上委托，依次递归，请求最终将到达顶层的启动类加载器，如果父类加载器可以完成类加载任务，就成功返回，倘若父类加载器无法完成此加载任务，子加载器才会尝试自己去加载，这就是双亲委派模式，即每个儿子都很懒，每次有活就丢给父亲去干，直到父亲说这件事我也干不了时，儿子自己想办法去完成。<br><img src="https://pic.imgdb.cn/item/6561558cc458853aef5649d9.jpg"></p>
+<h2 id="String的使用："><a href="#String的使用：" class="headerlink" title="String的使用："></a>String的使用：</h2><ol>
+<li><strong>String类上声明为final的</strong>，不可被继承。</li>
+<li>String实现了Serializable接口：表示字符串是支持序列化的。</li>
+<li>实现了Comparable接口：表示String可以比较大小。</li>
+<li>String内部定义了final char[] value用于存储字符串数据</li>
+<li>String：代表<strong>不可变的字符序列</strong>。简称：不可变性<br>5.1 当对字符串重新赋值时，需要在字符串常量池中创建一个新的区域，不能使用原有的value进行赋值。<br>5.2 当对现有的字符串进行连接操作时，也需要重新指定内存区域，不能使用原有的value进行赋值。<br>5.3 当调用String的replace()方法进行修改指定字符或字符串时，也需要重新指定内存区域，不能使用原有的value进行赋值。</li>
+<li>通过<strong>字面量的方式</strong>（String s&#x3D;”abc”，和new是不同的）给一个字符串赋值，此时的字符串值是声明在<strong>字符串常量池</strong>中。</li>
+<li><strong>字符串常量池</strong>中是不会存储相同内容的字符串的。(参考Map的Key值)</li>
+<li>通过字面量定义的方式：数据是存放在方法区中的<strong>字符串常量池</strong>。通过new+构造器的方式：数据是存放在<strong>堆空间中</strong>。</li>
+</ol>
+<h2 id="IO流："><a href="#IO流：" class="headerlink" title="IO流："></a>IO流：</h2><h3 id="分类："><a href="#分类：" class="headerlink" title="分类："></a>分类：</h3><ol>
+<li>按操作数据单位不同分为：字节流，字符流</li>
+<li>按数据流的流向不同分为：输入流、输出流</li>
+<li>按流的角色的不同分为：节点流（或文件流，因为可以直接操作文件，其它流都不能直接操作文件），处理流<br><img src="https://pic.imgdb.cn/item/656155fec458853aef578b1b.jpg"></li>
+</ol>
+<h3 id="IO流体系："><a href="#IO流体系：" class="headerlink" title="IO流体系："></a>IO流体系：</h3><p><img src="https://pic.imgdb.cn/item/65615615c458853aef57cd8b.jpg"></p>
+<h2 id="网络通信协议："><a href="#网络通信协议：" class="headerlink" title="网络通信协议："></a>网络通信协议：</h2><p>传输层中两个重要的协议：<strong>TCP</strong>(Transmission Control Protocol)传输控制协议&#x2F;<strong>UDP</strong>(User Datagram Protocol)用户数据报协议。</p>
+<p>TCP协议：</p>
+<ul>
+<li>使用TCP协议前，必须建立TCP连接，形成传输数据通道</li>
+<li>传输前，采用“三次握手”方式，点对点通信，<strong>是可靠的</strong></li>
+<li>TCP协议进行通信的两个应用进程：客户端、服务端</li>
+<li>在连接中可进行<strong>大数据量的传输</strong></li>
+<li>传输完毕，需释放<strong>已建立的连接，效率低</strong></li>
+</ul>
+<p>UDP协议：</p>
+<ul>
+<li>将数据封装成数据包，<strong>不需要建立连接</strong></li>
+<li>每个数据报的大小限制在64k内</li>
+<li>发送不管对方是否准备好，接收方收到也不确认，故是不可靠的</li>
+<li>可以广播发送</li>
+<li>发送数据结束时<strong>无需释放资源，开销小，速度快</strong></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>IO流</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>正则表达式</title>
+    <url>/2023/12/05/regex/</url>
+    <content><![CDATA[<h4 id="1-快速入门"><a href="#1-快速入门" class="headerlink" title="1.快速入门"></a>1.快速入门</h4><p>提取英文</p>
+<p><img src="https://pic.imgdb.cn/item/656e910cc458853aef5c8c79.jpg"></p>
+<p>提取数字<br><img src="https://pic.imgdb.cn/item/656e9128c458853aef5cd008.jpg"></p>
+<p>提取英文和数字<br><img src="https://pic.imgdb.cn/item/656e9142c458853aef5d17d6.jpg"></p>
+<h4 id="2-源码分析："><a href="#2-源码分析：" class="headerlink" title="2.源码分析："></a>2.源码分析：</h4><p>1.正则表达式中没有分组的情况</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.regex.Matcher;</span><br><span class="line"><span class="keyword">import</span> java.util.regex.Pattern;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RegTheory</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        String content=<span class="string">&quot;1998年12月8日，第二代Java平台的企业版J2EE发布。1999年6月，Sun公司发布了第二代Java平台&quot;</span> +</span><br><span class="line">                <span class="string">&quot;（简称为Java2）的3个版本：J2ME（Java2 Micro Edition，Java2平台的微型版），应用于移动、&quot;</span> +</span><br><span class="line">                <span class="string">&quot;无线及有限资源的环境；J2SE（Java 2 Standard Edition，Java 2平台的标准版），应用于桌面环境；&quot;</span> +</span><br><span class="line">                <span class="string">&quot;J2EE（Java 2Enterprise Edition，Java 2平台的企业版），应用于基于Java的应用服务器。Java 2平台的发布，&quot;</span> +</span><br><span class="line">                <span class="string">&quot;是Java发展过程中最重要的一个里程碑，标志着Java的应用开始普及。&quot;</span>;</span><br><span class="line"><span class="comment">//目标：匹配所有四个数字</span></span><br><span class="line"><span class="comment">//        说明</span></span><br><span class="line"><span class="comment">//       1. \\d 表示一个任意数字</span></span><br><span class="line">        String regStr=<span class="string">&quot;\\d\\d\\d\\d&quot;</span>;</span><br><span class="line"><span class="comment">//        创建模式对象[即正则表达式对象]</span></span><br><span class="line">        <span class="type">Pattern</span> <span class="variable">pattern</span> <span class="operator">=</span> Pattern.compile(regStr);</span><br><span class="line"><span class="comment">//        创建匹配器matcher,按照正则表达式，去匹配content</span></span><br><span class="line">        <span class="type">Matcher</span> <span class="variable">matcher</span> <span class="operator">=</span> pattern.matcher(content);</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 开始匹配</span></span><br><span class="line"><span class="comment">         * matcher.find() 所做的任务是：</span></span><br><span class="line"><span class="comment">         * 1.根据指定的规则，定位满足规则的子字符串(比如1998)</span></span><br><span class="line"><span class="comment">         * 2.找到后，将 子字符串的开始的索引记录到matcher对象中的属性      int[] groups   中;</span></span><br><span class="line"><span class="comment">         *          此时groups[0]=0,把该子字符串的结束的索引+1的值记录到groups[1]=4</span></span><br><span class="line"><span class="comment">         * 3.同时记录oldLast的值为，子该子字符串的结束的索引+1的值即4，那么下次执行find方法时，就从4开始匹配</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * matcher.group(0)分析</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * 源码</span></span><br><span class="line"><span class="comment">         *     public String group(int group) &#123;</span></span><br><span class="line"><span class="comment">         *         if (first &lt; 0)</span></span><br><span class="line"><span class="comment">         *             throw new IllegalStateException(&quot;No match found&quot;);</span></span><br><span class="line"><span class="comment">         *         if (group &lt; 0 || group &gt; groupCount())</span></span><br><span class="line"><span class="comment">         *             throw new IndexOutOfBoundsException(&quot;No group &quot; + group);</span></span><br><span class="line"><span class="comment">         *         if ((groups[group*2] == -1) || (groups[group*2+1] == -1))</span></span><br><span class="line"><span class="comment">         *             return null;</span></span><br><span class="line"><span class="comment">         *         return getSubSequence(groups[group * 2], groups[group * 2 + 1]).toString();    看这里</span></span><br><span class="line"><span class="comment">         *     &#125;</span></span><br><span class="line"><span class="comment">         *  1.根据groups[0]=0 和 groups[1]=4 记录的位置，从content开始截取子字符串返回。</span></span><br><span class="line"><span class="comment">         *      因为通过subString截取出来的时候是包含0，但是不包含索引为4这个位置的，就是[0,4)</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         *      String str =&quot;abcdef&quot;;</span></span><br><span class="line"><span class="comment">         *      执行str.substring(0,4)的结果为 abcd</span></span><br><span class="line"><span class="comment">         *-----------------------------------------------------------</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * 如果再次执行find方法，仍然按上面的进行分析:</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * 1.根据指定的规则，定位满足规则的子字符串(比如1996)</span></span><br><span class="line"><span class="comment">         * 2.找到后，将 子字符串的开始的索引记录到matcher对象中的属性      int[] groups   中;</span></span><br><span class="line"><span class="comment">         *          此时groups[0]=31,把该子字符串的结束的索引+1的值记录到groups[1]=35</span></span><br><span class="line"><span class="comment">         * 3.同时记录oldLast的值为，子该子字符串的结束的索引+1的值即35，那么下次执行find方法时，就从35开始匹配</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         *  1.根据groups[0]=31 和 groups[1]=35 记录的位置，从content开始截取子字符串返回。</span></span><br><span class="line"><span class="comment">         *      因为通过subString截取出来的时候是包含31，但是不包含索引为35这个位置的，就是[31,35)</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">while</span> (matcher.find())&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;找到了&quot;</span>+matcher.group(<span class="number">0</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>2.正则表达式中存在分组的情况</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.regex.Matcher;</span><br><span class="line"><span class="keyword">import</span> java.util.regex.Pattern;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RegTheory</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        String content=<span class="string">&quot;1998年12月8日，第二代Java平台的企业版J2EE发布。1999年6月，Sun公司发布了第二代Java平台&quot;</span> +</span><br><span class="line">                <span class="string">&quot;（简称为Java2）的3个版本：J2ME（Java2 Micro Edition，Java2平台的微型版），应用于移动、&quot;</span> +</span><br><span class="line">                <span class="string">&quot;无线及有限资源的环境；J2SE（Java 2 Standard Edition，Java 2平台的标准版），应用于桌面环境；&quot;</span> +</span><br><span class="line">                <span class="string">&quot;J2EE（Java 2Enterprise Edition，Java 2平台的企业版），应用于基于Java的应用服务器。Java 2平台的发布，&quot;</span> +</span><br><span class="line">                <span class="string">&quot;是Java发展过程中最重要的一个里程碑，标志着Java的应用开始普及。&quot;</span>;</span><br><span class="line"><span class="comment">//目标：匹配所有四个数字</span></span><br><span class="line"><span class="comment">//        说明</span></span><br><span class="line"><span class="comment">//       1. \\d 表示一个任意数字</span></span><br><span class="line">        String regStr=<span class="string">&quot;(\\d\\d)(\\d\\d)&quot;</span>;</span><br><span class="line"><span class="comment">//        创建模式对象[即正则表达式对象]</span></span><br><span class="line">        <span class="type">Pattern</span> <span class="variable">pattern</span> <span class="operator">=</span> Pattern.compile(regStr);</span><br><span class="line"><span class="comment">//        创建匹配器matcher,按照正则表达式，去匹配content</span></span><br><span class="line">        <span class="type">Matcher</span> <span class="variable">matcher</span> <span class="operator">=</span> pattern.matcher(content);</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 开始匹配</span></span><br><span class="line"><span class="comment">         * matcher.find() 所做的任务是：(考虑分组)</span></span><br><span class="line"><span class="comment">         * 什么是分组，比如(\d\d)(\d\d)，正则表达式中有()表示分组，第一个()表示第1组，第二个()表示第2组，第三个()表示第3组.........</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * 1.根据指定的规则，定位满足规则的子字符串(比如1998)</span></span><br><span class="line"><span class="comment">         * 2.找到后，将 子字符串的开始的索引记录到matcher对象中的属性      int[] groups   中;</span></span><br><span class="line"><span class="comment">         *          2.1此时groups[0]=0,把该子字符串的结束的索引+1的值记录到groups[1]=4</span></span><br><span class="line"><span class="comment">         *          2.2 记录第1组()匹配到的字符串  groups[2]=0   groups[3]=1+1     分组记录的值，结束的索引也要加+,还是substring的规则。</span></span><br><span class="line"><span class="comment">         *          2.3 记录第2组()匹配到的字符串  groups[4]=2   groups[5]=3+1</span></span><br><span class="line"><span class="comment">         * 3.同时记录oldLast的值为，子该子字符串的结束的索引+1的值即4，那么下次执行find方法时，就从4开始匹配</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * matcher.group(0)分析</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * 源码</span></span><br><span class="line"><span class="comment">         *     public String group(int group) &#123;</span></span><br><span class="line"><span class="comment">         *         if (first &lt; 0)</span></span><br><span class="line"><span class="comment">         *             throw new IllegalStateException(&quot;No match found&quot;);</span></span><br><span class="line"><span class="comment">         *         if (group &lt; 0 || group &gt; groupCount())</span></span><br><span class="line"><span class="comment">         *             throw new IndexOutOfBoundsException(&quot;No group &quot; + group);</span></span><br><span class="line"><span class="comment">         *         if ((groups[group*2] == -1) || (groups[group*2+1] == -1))</span></span><br><span class="line"><span class="comment">         *             return null;</span></span><br><span class="line"><span class="comment">         *         return getSubSequence(groups[group * 2], groups[group * 2 + 1]).toString();    看这里!!!!</span></span><br><span class="line"><span class="comment">         *     &#125;</span></span><br><span class="line"><span class="comment">         *  1.根据groups[0]=0 和 groups[1]=4 记录的位置，从content开始截取子字符串返回。</span></span><br><span class="line"><span class="comment">         *      因为通过subString截取出来的时候是包含0，但是不包含索引为4这个位置的，就是[0,4)</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         *      String str =&quot;abcdef&quot;;</span></span><br><span class="line"><span class="comment">         *      执行str.substring(0,4)的结果为 abcd</span></span><br><span class="line"><span class="comment">         *-----------------------------------------------------------</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * 如果再次执行find方法，仍然按上面的进行分析:</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * 1.根据指定的规则，定位满足规则的子字符串(比如1996)</span></span><br><span class="line"><span class="comment">         * 2.找到后，将 子字符串的开始的索引记录到matcher对象中的属性      int[] groups   中;</span></span><br><span class="line"><span class="comment">         *          此时groups[0]=31,把该子字符串的结束的索引+1的值记录到groups[1]=35</span></span><br><span class="line"><span class="comment">         * 3.同时记录oldLast的值为，子该子字符串的结束的索引+1的值即35，那么下次执行find方法时，就从35开始匹配</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         *  1.根据groups[0]=31 和 groups[1]=35 记录的位置，从content开始截取子字符串返回。</span></span><br><span class="line"><span class="comment">         *      因为通过subString截取出来的时候是包含31，但是不包含索引为35这个位置的，就是[31,35)</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">while</span> (matcher.find())&#123;</span><br><span class="line">            <span class="comment">/**</span></span><br><span class="line"><span class="comment">             * 小结：</span></span><br><span class="line"><span class="comment">             * 1.如果正则表达式有()分组</span></span><br><span class="line"><span class="comment">             * 2.取出匹配的字符串规则如下</span></span><br><span class="line"><span class="comment">             * 3.group(0)表示匹配到的子字符串</span></span><br><span class="line"><span class="comment">             * 4.group(1)表示匹配到的子字符串的第一组</span></span><br><span class="line"><span class="comment">             * 5.group(2)表示匹配到的子字符串第二组</span></span><br><span class="line"><span class="comment">             * 6.但是分组数不能越界。</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            System.out.println(<span class="string">&quot;找到了&quot;</span>+matcher.group(<span class="number">0</span>));</span><br><span class="line">            System.out.println(<span class="string">&quot;第一组小括号取到的值&quot;</span>+matcher.group(<span class="number">1</span>));</span><br><span class="line">            System.out.println(<span class="string">&quot;第二组小括号取到的值&quot;</span>+matcher.group(<span class="number">2</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="3-正则表达式语法"><a href="#3-正则表达式语法" class="headerlink" title="3.正则表达式语法"></a>3.正则表达式语法</h4><p>3.1元字符-转义符\</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">需要用到转义符号的字符有：  . * + ( ) $ / \ ? [ ] ^ &#123; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>3.2元字符-字符匹配符</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+<th>示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>[ ]</td>
+<td>可接收的字符列表</td>
+<td>[efgh]</td>
+<td>e、f、g、h中的***<u>任意一个</u>***字符</td>
+</tr>
+<tr>
+<td>[ ^ ]</td>
+<td>不接收的字符列表</td>
+<td>[^abc]</td>
+<td>除a、b、c之外的***<u>任意一个</u>***字符，包括数字和特殊符号</td>
+</tr>
+<tr>
+<td>-</td>
+<td>连字符</td>
+<td>A-Z</td>
+<td>任意单个大写字母</td>
+</tr>
+<tr>
+<td>.</td>
+<td>匹配除\n 以外的任何字符。如果要匹配.本身那就需要使用\\.</td>
+<td>a..b</td>
+<td>以a开头，b结尾，中间包括2个任意字</td>
+</tr>
+<tr>
+<td>\\d</td>
+<td>匹配单个数字字符，相当于[0-9]</td>
+<td>\\d{3}(\\d)?</td>
+<td>包含3个或4个数字的字符串</td>
+</tr>
+<tr>
+<td>\\D</td>
+<td>匹配单个非数字字符，相当于[^0-9]</td>
+<td>\\D(\\d)*</td>
+<td>以单个非数字字符开头，后接任意个数字字符串</td>
+</tr>
+<tr>
+<td>\\w</td>
+<td>匹配单个数字、大小写字母、下划线字符,相当于[0-9a-zA-Z]</td>
+<td>\\d{3}\\w{4}</td>
+<td>以3个数字字符开头的,长度为7的数字字母字符串</td>
+</tr>
+<tr>
+<td>\\W</td>
+<td>匹配单个非数字、大小写字母字符，相当于[^0-9a-zA-Z]</td>
+<td>\\W+\\d{2}</td>
+<td>以至少1个非数字字母字符开头，2个数字字符结尾的字符串</td>
+</tr>
+<tr>
+<td>\\s</td>
+<td>匹配任何空白字符(空格、制表符等)</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>\\S</td>
+<td>匹配任何非空白字符(空格、制表符等)</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>​	Java正则表达式默认是区分字母大小写的，如何实现不区分大小写？</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.regex.Matcher;</span><br><span class="line"><span class="keyword">import</span> java.util.regex.Pattern;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RegExp03</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">content</span> <span class="operator">=</span><span class="string">&quot;abc1123ABC&quot;</span>;</span><br><span class="line"><span class="comment">//        String regStr = &quot;abc&quot;;//1.匹配abc字符串  默认区分大小写</span></span><br><span class="line"><span class="comment">//        String regStr = &quot;(?i)abc&quot;;//2.匹配abc字符串  不区分大小写</span></span><br><span class="line"><span class="comment">//        String regStr = &quot;a(?i)bc&quot;;//3.匹配abc字符串  b、c不区分大小写</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">regStr</span> <span class="operator">=</span> <span class="string">&quot;a((?i)b)c&quot;</span>;<span class="comment">//4.匹配abc字符串  只有b不区分大小写</span></span><br><span class="line">        <span class="type">Pattern</span> <span class="variable">pattern</span> <span class="operator">=</span> Pattern.compile(regStr);</span><br><span class="line">        <span class="type">Matcher</span> <span class="variable">matcher</span> <span class="operator">=</span> pattern.matcher(content);</span><br><span class="line">        <span class="keyword">while</span> (matcher.find())&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;找到了&quot;</span>+ matcher.group(<span class="number">0</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>或者：在创建正则表达式对象的时候就注入参数      (INSENSITIVE   不敏感的)</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">Pattern</span> <span class="variable">pattern</span> <span class="operator">=</span> Pattern.compile(regStr,Pattern.CASE_INSENSITIVE);</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>未完待续………..</p>
+]]></content>
+      <categories>
+        <category>正则表达式</category>
+      </categories>
+      <tags>
+        <tag>正则表达式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>stream流</title>
+    <url>/2023/11/29/stream/</url>
+    <content><![CDATA[<h2 id="3-Stream流"><a href="#3-Stream流" class="headerlink" title="3. Stream流"></a>3. Stream流</h2><h3 id="3-1-概述"><a href="#3-1-概述" class="headerlink" title="3.1 概述"></a>3.1 概述</h3><p>​	Java8的Stream使用的是函数式编程模式，如同它的名字一样，它可以被用来对集合或数组进行链状流式的操作。可以更方便的让我们对集合或数组操作。</p>
+<h3 id="3-2-案例数据准备"><a href="#3-2-案例数据准备" class="headerlink" title="3.2 案例数据准备"></a>3.2 案例数据准备</h3><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.18.16<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="meta">@EqualsAndHashCode</span><span class="comment">//用于后期的去重使用</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Author</span> &#123;</span><br><span class="line">    <span class="comment">//id</span></span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line">    <span class="comment">//姓名</span></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="comment">//年龄</span></span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">    <span class="comment">//简介</span></span><br><span class="line">    <span class="keyword">private</span> String intro;</span><br><span class="line">    <span class="comment">//作品</span></span><br><span class="line">    <span class="keyword">private</span> List&lt;Book&gt; books;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> List&lt;Author&gt; <span class="title function_">getAuthors</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">//数据初始化</span></span><br><span class="line">    <span class="type">Author</span> <span class="variable">author</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Author</span>(<span class="number">1L</span>,<span class="string">&quot;蒙多&quot;</span>,<span class="number">33</span>,<span class="string">&quot;一个从菜刀中明悟哲理的祖安人&quot;</span>,<span class="literal">null</span>);</span><br><span class="line">    <span class="type">Author</span> <span class="variable">author2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Author</span>(<span class="number">2L</span>,<span class="string">&quot;亚拉索&quot;</span>,<span class="number">15</span>,<span class="string">&quot;狂风也追逐不上他的思考速度&quot;</span>,<span class="literal">null</span>);</span><br><span class="line">    <span class="type">Author</span> <span class="variable">author3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Author</span>(<span class="number">3L</span>,<span class="string">&quot;易&quot;</span>,<span class="number">14</span>,<span class="string">&quot;是这个世界在限制他的思维&quot;</span>,<span class="literal">null</span>);</span><br><span class="line">    <span class="type">Author</span> <span class="variable">author4</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Author</span>(<span class="number">3L</span>,<span class="string">&quot;易&quot;</span>,<span class="number">14</span>,<span class="string">&quot;是这个世界在限制他的思维&quot;</span>,<span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//书籍列表</span></span><br><span class="line">    List&lt;Book&gt; books1 = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    List&lt;Book&gt; books2 = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    List&lt;Book&gt; books3 = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    books1.add(<span class="keyword">new</span> <span class="title class_">Book</span>(<span class="number">1L</span>,<span class="string">&quot;刀的两侧是光明与黑暗&quot;</span>,<span class="string">&quot;哲学,爱情&quot;</span>,<span class="number">88</span>,<span class="string">&quot;用一把刀划分了爱恨&quot;</span>));</span><br><span class="line">    books1.add(<span class="keyword">new</span> <span class="title class_">Book</span>(<span class="number">2L</span>,<span class="string">&quot;一个人不能死在同一把刀下&quot;</span>,<span class="string">&quot;个人成长,爱情&quot;</span>,<span class="number">99</span>,<span class="string">&quot;讲述如何从失败中明悟真理&quot;</span>));</span><br><span class="line"></span><br><span class="line">    books2.add(<span class="keyword">new</span> <span class="title class_">Book</span>(<span class="number">3L</span>,<span class="string">&quot;那风吹不到的地方&quot;</span>,<span class="string">&quot;哲学&quot;</span>,<span class="number">85</span>,<span class="string">&quot;带你用思维去领略世界的尽头&quot;</span>));</span><br><span class="line">    books2.add(<span class="keyword">new</span> <span class="title class_">Book</span>(<span class="number">3L</span>,<span class="string">&quot;那风吹不到的地方&quot;</span>,<span class="string">&quot;哲学&quot;</span>,<span class="number">85</span>,<span class="string">&quot;带你用思维去领略世界的尽头&quot;</span>));</span><br><span class="line">    books2.add(<span class="keyword">new</span> <span class="title class_">Book</span>(<span class="number">4L</span>,<span class="string">&quot;吹或不吹&quot;</span>,<span class="string">&quot;爱情,个人传记&quot;</span>,<span class="number">56</span>,<span class="string">&quot;一个哲学家的恋爱观注定很难把他所在的时代理解&quot;</span>));</span><br><span class="line"></span><br><span class="line">    books3.add(<span class="keyword">new</span> <span class="title class_">Book</span>(<span class="number">5L</span>,<span class="string">&quot;你的剑就是我的剑&quot;</span>,<span class="string">&quot;爱情&quot;</span>,<span class="number">56</span>,<span class="string">&quot;无法想象一个武者能对他的伴侣这么的宽容&quot;</span>));</span><br><span class="line">    books3.add(<span class="keyword">new</span> <span class="title class_">Book</span>(<span class="number">6L</span>,<span class="string">&quot;风与剑&quot;</span>,<span class="string">&quot;个人传记&quot;</span>,<span class="number">100</span>,<span class="string">&quot;两个哲学家灵魂和肉体的碰撞会激起怎么样的火花呢？&quot;</span>));</span><br><span class="line">    books3.add(<span class="keyword">new</span> <span class="title class_">Book</span>(<span class="number">6L</span>,<span class="string">&quot;风与剑&quot;</span>,<span class="string">&quot;个人传记&quot;</span>,<span class="number">100</span>,<span class="string">&quot;两个哲学家灵魂和肉体的碰撞会激起怎么样的火花呢？&quot;</span>));</span><br><span class="line"></span><br><span class="line">    author.setBooks(books1);</span><br><span class="line">    author2.setBooks(books2);</span><br><span class="line">    author3.setBooks(books3);</span><br><span class="line">    author4.setBooks(books3);</span><br><span class="line"></span><br><span class="line">    List&lt;Author&gt; authorList = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(Arrays.asList(author,author2,author3,author4));</span><br><span class="line">    <span class="keyword">return</span> authorList;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-3-快速入门"><a href="#3-3-快速入门" class="headerlink" title="3.3 快速入门"></a>3.3 快速入门</h3><h4 id="3-3-1-需求"><a href="#3-3-1-需求" class="headerlink" title="3.3.1 需求"></a>3.3.1 需求</h4><p>​	我们可以调用getAuthors方法获取到作家的集合。现在需要打印所有年龄小于18的作家的名字，并且要注意去重。</p>
+<h4 id="3-3-2-实现"><a href="#3-3-2-实现" class="headerlink" title="3.3.2 实现"></a>3.3.2 实现</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//打印所有年龄小于18的作家的名字，并且要注意去重</span></span><br><span class="line">List&lt;Author&gt; authors = getAuthors();</span><br><span class="line">authors.</span><br><span class="line">        stream()<span class="comment">//把集合转换成流</span></span><br><span class="line">        .distinct()<span class="comment">//先去除重复的作家</span></span><br><span class="line">        .filter(author -&gt; author.getAge()&lt;<span class="number">18</span>)<span class="comment">//筛选年龄小于18的</span></span><br><span class="line">        .forEach(author -&gt; System.out.println(author.getName()));<span class="comment">//遍历打印名字</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-4-常用操作"><a href="#3-4-常用操作" class="headerlink" title="3.4 常用操作"></a>3.4 常用操作</h3><h4 id="3-4-1-创建流"><a href="#3-4-1-创建流" class="headerlink" title="3.4.1 创建流"></a>3.4.1 创建流</h4><p><strong>单列集合</strong>： <code>集合对象.stream()</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">      List&lt;Author&gt; authors = getAuthors();</span><br><span class="line">Stream&lt;Author&gt; stream = authors.stream();</span><br></pre></td></tr></table></figure>
+
+
+<p><strong>数组</strong>：<code>Arrays.stream(数组) </code>或者使用<code>Stream.of</code>来创建</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Integer[] arr = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</span><br><span class="line">Stream&lt;Integer&gt; stream = Arrays.stream(arr);</span><br><span class="line">Stream&lt;Integer&gt; stream2 = Stream.of(arr);</span><br></pre></td></tr></table></figure>
+
+
+<p><strong>双列集合</strong>：转换成单列集合后再创建</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Map&lt;String,Integer&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">map.put(<span class="string">&quot;蜡笔小新&quot;</span>,<span class="number">19</span>);</span><br><span class="line">map.put(<span class="string">&quot;黑子&quot;</span>,<span class="number">17</span>);</span><br><span class="line">map.put(<span class="string">&quot;日向翔阳&quot;</span>,<span class="number">16</span>);</span><br><span class="line">Stream&lt;Map.Entry&lt;String, Integer&gt;&gt; stream = map.entrySet().stream();</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="3-4-2-中间操作"><a href="#3-4-2-中间操作" class="headerlink" title="3.4.2 中间操作"></a>3.4.2 中间操作</h3><h4 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h4><p>​	可以对流中的元素进行条件过滤，符合过滤条件的才能继续留在流中。</p>
+<p>例如：<br>​	打印所有姓名长度大于1的作家的姓名</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;Author&gt; authors = getAuthors();</span><br><span class="line">authors.stream()</span><br><span class="line">        .filter(author -&gt; author.getName().length()&gt;<span class="number">1</span>)</span><br><span class="line">        .forEach(author -&gt; System.out.println(author.getName()));</span><br></pre></td></tr></table></figure>
+
+<h4 id="map"><a href="#map" class="headerlink" title="map"></a>map</h4><p>​	可以把对流中的元素进行计算或转换。</p>
+<p>例如：</p>
+<p>​	打印所有作家的姓名</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;Author&gt; authors = getAuthors();</span><br><span class="line"></span><br><span class="line">authors</span><br><span class="line">        .stream()</span><br><span class="line">        .map(author -&gt; author.getName())</span><br><span class="line">        .forEach(name-&gt;System.out.println(name));</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//        打印所有作家的姓名</span></span><br><span class="line">        List&lt;Author&gt; authors = getAuthors();</span><br><span class="line"></span><br><span class="line"><span class="comment">//        authors.stream()</span></span><br><span class="line"><span class="comment">//                .map(author -&gt; author.getName())</span></span><br><span class="line"><span class="comment">//                .forEach(s -&gt; System.out.println(s));</span></span><br><span class="line"></span><br><span class="line">        authors.stream()</span><br><span class="line">                .map(author -&gt; author.getAge())</span><br><span class="line">                .map(age-&gt;age+<span class="number">10</span>)</span><br><span class="line">                .forEach(age-&gt; System.out.println(age));</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="distinct"><a href="#distinct" class="headerlink" title="distinct"></a>distinct</h4><p>​	可以去除流中的重复元素。</p>
+<p>例如：<br>​	打印所有作家的姓名，并且要求其中不能有重复元素。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;Author&gt; authors = getAuthors();</span><br><span class="line">authors.stream()</span><br><span class="line">        .distinct()</span><br><span class="line">        .forEach(author -&gt; System.out.println(author.getName()));</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：distinct方法是依赖Object的equals方法来判断是否是相同对象的。所以需要注意重写equals方法。</strong></p>
+<h4 id="sorted"><a href="#sorted" class="headerlink" title="sorted"></a>sorted</h4><p>​	可以对流中的元素进行排序。</p>
+<p>例如：<br>​	对流中的元素按照年龄进行降序排序，并且要求不能有重复的元素。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">        List&lt;Author&gt; authors = getAuthors();</span><br><span class="line"><span class="comment">//        对流中的元素按照年龄进行降序排序，并且要求不能有重复的元素。</span></span><br><span class="line">        authors.stream()</span><br><span class="line">                .distinct()</span><br><span class="line">                .sorted()</span><br><span class="line">                .forEach(author -&gt; System.out.println(author.getAge()));</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">        List&lt;Author&gt; authors = getAuthors();</span><br><span class="line"><span class="comment">//        对流中的元素按照年龄进行降序排序，并且要求不能有重复的元素。</span></span><br><span class="line">        authors.stream()</span><br><span class="line">                .distinct()</span><br><span class="line">                .sorted((o1, o2) -&gt; o2.getAge()-o1.getAge())</span><br><span class="line">                .forEach(author -&gt; System.out.println(author.getAge()));</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：如果调用空参的sorted()方法，需要流中的元素是实现了Comparable。</strong></p>
+<h4 id="limit"><a href="#limit" class="headerlink" title="limit"></a>limit</h4><p>​	可以设置流的最大长度，超出的部分将被抛弃。</p>
+<p>例如：<br>​	对流中的元素按照年龄进行降序排序，并且要求不能有重复的元素,然后打印其中年龄最大的两个作家的姓名。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;Author&gt; authors = getAuthors();</span><br><span class="line">authors.stream()</span><br><span class="line">        .distinct()</span><br><span class="line">        .sorted()</span><br><span class="line">        .limit(<span class="number">2</span>)</span><br><span class="line">        .forEach(author -&gt; System.out.println(author.getName()));</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="skip"><a href="#skip" class="headerlink" title="skip"></a>skip</h4><p>​	跳过流中的前n个元素，返回剩下的元素</p>
+<p>例如：<br>​	打印除了年龄最大的作家外的其他作家，要求不能有重复元素，并且按照年龄降序排序。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//        打印除了年龄最大的作家外的其他作家，要求不能有重复元素，并且按照年龄降序排序。</span></span><br><span class="line">        List&lt;Author&gt; authors = getAuthors();</span><br><span class="line">        authors.stream()</span><br><span class="line">                .distinct()</span><br><span class="line">                .sorted()</span><br><span class="line">                .skip(<span class="number">1</span>)</span><br><span class="line">                .forEach(author -&gt; System.out.println(author.getName()));</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="flatMap"><a href="#flatMap" class="headerlink" title="flatMap"></a>flatMap</h4><p>​	map只能把一个对象转换成另一个对象来作为流中的元素。而flatMap可以把一个对象转换成多个对象作为流中的元素。</p>
+<p>例一：<br>​	打印所有书籍的名字。要求对重复的元素进行去重。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//        打印所有书籍的名字。要求对重复的元素进行去重。</span></span><br><span class="line">        List&lt;Author&gt; authors = getAuthors();</span><br><span class="line"></span><br><span class="line">        authors.stream()</span><br><span class="line">                .flatMap(author -&gt; author.getBooks().stream())</span><br><span class="line">                .distinct()</span><br><span class="line">                .forEach(book -&gt; System.out.println(book.getName()));</span><br></pre></td></tr></table></figure>
+
+
+<p>例二：<br>​	打印现有数据的所有分类。要求对分类进行去重。不能出现这种格式：哲学,爱情</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//        打印现有数据的所有分类。要求对分类进行去重。不能出现这种格式：哲学,爱情     爱情</span></span><br><span class="line">        List&lt;Author&gt; authors = getAuthors();</span><br><span class="line">        authors.stream()</span><br><span class="line">                .flatMap(author -&gt; author.getBooks().stream())</span><br><span class="line">                .distinct()</span><br><span class="line">                .flatMap(book -&gt; Arrays.stream(book.getCategory().split(<span class="string">&quot;,&quot;</span>)))</span><br><span class="line">                .distinct()</span><br><span class="line">                .forEach(category-&gt; System.out.println(category));</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-3-终结操作"><a href="#3-4-3-终结操作" class="headerlink" title="3.4.3 终结操作"></a>3.4.3 终结操作</h3><h4 id="forEach"><a href="#forEach" class="headerlink" title="forEach"></a>forEach</h4><p>​	对流中的元素进行遍历操作，我们通过传入的参数去指定对遍历到的元素进行什么具体操作。</p>
+<p>例子：<br>​	输出所有作家的名字</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//        输出所有作家的名字</span></span><br><span class="line">        List&lt;Author&gt; authors = getAuthors();</span><br><span class="line"></span><br><span class="line">        authors.stream()</span><br><span class="line">                .map(author -&gt; author.getName())</span><br><span class="line">                .distinct()</span><br><span class="line">                .forEach(name-&gt; System.out.println(name));</span><br></pre></td></tr></table></figure>
+
+<h4 id="count"><a href="#count" class="headerlink" title="count"></a>count</h4><p>​	可以用来获取当前流中元素的个数。</p>
+<p>例子：<br>​	打印这些作家的所出书籍的数目，注意删除重复元素。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//        打印这些作家的所出书籍的数目，注意删除重复元素。</span></span><br><span class="line">        List&lt;Author&gt; authors = getAuthors();</span><br><span class="line"></span><br><span class="line">        <span class="type">long</span> <span class="variable">count</span> <span class="operator">=</span> authors.stream()</span><br><span class="line">                .flatMap(author -&gt; author.getBooks().stream())</span><br><span class="line">                .distinct()</span><br><span class="line">                .count();</span><br><span class="line">        System.out.println(count);</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="max-min"><a href="#max-min" class="headerlink" title="max&amp;min"></a>max&amp;min</h4><p>​	可以用来或者流中的最值。</p>
+<p>例子：<br>​	分别获取这些作家的所出书籍的最高分和最低分并打印。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//        分别获取这些作家的所出书籍的最高分和最低分并打印。</span></span><br><span class="line">        <span class="comment">//Stream&lt;Author&gt;  -&gt; Stream&lt;Book&gt; -&gt;Stream&lt;Integer&gt;  -&gt;求值</span></span><br><span class="line"></span><br><span class="line">        List&lt;Author&gt; authors = getAuthors();</span><br><span class="line">        Optional&lt;Integer&gt; max = authors.stream()</span><br><span class="line">                .flatMap(author -&gt; author.getBooks().stream())</span><br><span class="line">                .map(book -&gt; book.getScore())</span><br><span class="line">                .max((score1, score2) -&gt; score1 - score2);</span><br><span class="line"></span><br><span class="line">        Optional&lt;Integer&gt; min = authors.stream()</span><br><span class="line">                .flatMap(author -&gt; author.getBooks().stream())</span><br><span class="line">                .map(book -&gt; book.getScore())</span><br><span class="line">                .min((score1, score2) -&gt; score1 - score2);</span><br><span class="line">        System.out.println(max.get());</span><br><span class="line">        System.out.println(min.get());</span><br></pre></td></tr></table></figure>
+
+<h4 id="collect"><a href="#collect" class="headerlink" title="collect"></a>collect</h4><p>​	把当前流转换成一个集合。</p>
+<p>例子：<br>​	获取一个存放所有作者名字的List集合。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//        获取一个存放所有作者名字的List集合。</span></span><br><span class="line">        List&lt;Author&gt; authors = getAuthors();</span><br><span class="line">        List&lt;String&gt; nameList = authors.stream()</span><br><span class="line">                .map(author -&gt; author.getName())</span><br><span class="line">                .collect(Collectors.toList());</span><br><span class="line">        System.out.println(nameList);</span><br></pre></td></tr></table></figure>
+
+
+<pre><code>获取一个所有书名的Set集合。
+</code></pre>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//        获取一个所有书名的Set集合。</span></span><br><span class="line">        List&lt;Author&gt; authors = getAuthors();</span><br><span class="line">        Set&lt;Book&gt; books = authors.stream()</span><br><span class="line">                .flatMap(author -&gt; author.getBooks().stream())</span><br><span class="line">                .collect(Collectors.toSet());</span><br><span class="line"></span><br><span class="line">        System.out.println(books);</span><br></pre></td></tr></table></figure>
+
+
+<pre><code>获取一个Map集合，map的key为作者名，value为List&lt;Book&gt;
+</code></pre>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//        获取一个Map集合，map的key为作者名，value为List&lt;Book&gt;</span></span><br><span class="line">        List&lt;Author&gt; authors = getAuthors();</span><br><span class="line"></span><br><span class="line">        Map&lt;String, List&lt;Book&gt;&gt; map = authors.stream()</span><br><span class="line">                .distinct()</span><br><span class="line">                .collect(Collectors.toMap(author -&gt; author.getName(), author -&gt; author.getBooks()));</span><br><span class="line"></span><br><span class="line">        System.out.println(map);</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h3 id="查找与匹配"><a href="#查找与匹配" class="headerlink" title="查找与匹配"></a>查找与匹配</h3><h4 id="anyMatch"><a href="#anyMatch" class="headerlink" title="anyMatch"></a>anyMatch</h4><p>​	可以用来判断是否有任意符合匹配条件的元素，结果为boolean类型。</p>
+<p>例子：<br>​	判断是否有年龄在29以上的作家</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//        判断是否有年龄在29以上的作家</span></span><br><span class="line">        List&lt;Author&gt; authors = getAuthors();</span><br><span class="line">        <span class="type">boolean</span> <span class="variable">flag</span> <span class="operator">=</span> authors.stream()</span><br><span class="line">                .anyMatch(author -&gt; author.getAge() &gt; <span class="number">29</span>);</span><br><span class="line">        System.out.println(flag);</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h4 id="allMatch"><a href="#allMatch" class="headerlink" title="allMatch"></a>allMatch</h4><p>​	可以用来判断是否都符合匹配条件，结果为boolean类型。如果都符合结果为true，否则结果为false。</p>
+<p>例子：<br>​	判断是否所有的作家都是成年人</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//        判断是否所有的作家都是成年人</span></span><br><span class="line">        List&lt;Author&gt; authors = getAuthors();</span><br><span class="line">        <span class="type">boolean</span> <span class="variable">flag</span> <span class="operator">=</span> authors.stream()</span><br><span class="line">                .allMatch(author -&gt; author.getAge() &gt;= <span class="number">18</span>);</span><br><span class="line">        System.out.println(flag);</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="findAny"><a href="#findAny" class="headerlink" title="findAny"></a>findAny</h4><p>​	获取流中的任意一个元素。该方法没有办法保证获取的一定是流中的第一个元素。</p>
+<p>例子：<br>​	获取任意一个年龄大于18的作家，如果存在就输出他的名字</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//        获取任意一个年龄大于18的作家，如果存在就输出他的名字</span></span><br><span class="line">        List&lt;Author&gt; authors = getAuthors();</span><br><span class="line">        Optional&lt;Author&gt; optionalAuthor = authors.stream()</span><br><span class="line">                .filter(author -&gt; author.getAge()&gt;<span class="number">18</span>)</span><br><span class="line">                .findAny();</span><br><span class="line"></span><br><span class="line">        optionalAuthor.ifPresent(author -&gt; System.out.println(author.getName()));</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="findFirst"><a href="#findFirst" class="headerlink" title="findFirst"></a>findFirst</h4><p>​	获取流中的第一个元素。</p>
+<p>例子：<br>​	获取一个年龄最小的作家，并输出他的姓名。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//        获取一个年龄最小的作家，并输出他的姓名。</span></span><br><span class="line">        List&lt;Author&gt; authors = getAuthors();</span><br><span class="line">        Optional&lt;Author&gt; first = authors.stream()</span><br><span class="line">                .sorted((o1, o2) -&gt; o1.getAge() - o2.getAge())</span><br><span class="line">                .findFirst();</span><br><span class="line"></span><br><span class="line">        first.ifPresent(author -&gt; System.out.println(author.getName()));</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="reduce归并"><a href="#reduce归并" class="headerlink" title="reduce归并"></a>reduce归并</h4><p>​	对流中的数据按照你指定的计算方式计算出一个结果。（缩减操作）</p>
+<p>​	reduce的作用是把stream中的元素给组合起来，我们可以传入一个初始值，它会按照我们的计算方式依次拿流中的元素和初始化值进行计算，计算结果再和后面的元素计算。</p>
+<p>​	reduce两个参数的重载形式内部的计算方式如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">T</span> <span class="variable">result</span> <span class="operator">=</span> identity;</span><br><span class="line"><span class="keyword">for</span> (T element : <span class="built_in">this</span> stream)</span><br><span class="line">	result = accumulator.apply(result, element)</span><br><span class="line"><span class="keyword">return</span> result;</span><br></pre></td></tr></table></figure>
+<pre><code>其中identity就是我们可以通过方法参数传入的初始值，accumulator的apply具体进行什么计算也是我们通过方法参数来确定的。
+
+
+例子：
+​	使用reduce求所有作者年龄的和
+</code></pre>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//        使用reduce求所有作者年龄的和</span></span><br><span class="line">        List&lt;Author&gt; authors = getAuthors();</span><br><span class="line">        <span class="type">Integer</span> <span class="variable">sum</span> <span class="operator">=</span> authors.stream()</span><br><span class="line">                .distinct()</span><br><span class="line">                .map(author -&gt; author.getAge())</span><br><span class="line">                .reduce(<span class="number">0</span>, (result, element) -&gt; result + element);</span><br><span class="line">        System.out.println(sum);</span><br></pre></td></tr></table></figure>
+
+<pre><code>    使用reduce求所有作者中年龄的最大值
+</code></pre>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//        使用reduce求所有作者中年龄的最大值</span></span><br><span class="line">        List&lt;Author&gt; authors = getAuthors();</span><br><span class="line">        <span class="type">Integer</span> <span class="variable">max</span> <span class="operator">=</span> authors.stream()</span><br><span class="line">                .map(author -&gt; author.getAge())</span><br><span class="line">                .reduce(Integer.MIN_VALUE, (result, element) -&gt; result &lt; element ? element : result);</span><br><span class="line"></span><br><span class="line">        System.out.println(max);</span><br></pre></td></tr></table></figure>
+
+<pre><code>    使用reduce求所有作者中年龄的最小值
+</code></pre>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//        使用reduce求所有作者中年龄的最小值</span></span><br><span class="line">        List&lt;Author&gt; authors = getAuthors();</span><br><span class="line">        <span class="type">Integer</span> <span class="variable">min</span> <span class="operator">=</span> authors.stream()</span><br><span class="line">                .map(author -&gt; author.getAge())</span><br><span class="line">                .reduce(Integer.MAX_VALUE, (result, element) -&gt; result &gt; element ? element : result);</span><br><span class="line">        System.out.println(min);</span><br></pre></td></tr></table></figure>
+<pre><code>    reduce一个参数的重载形式内部的计算
+</code></pre>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">boolean</span> <span class="variable">foundAny</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">  <span class="type">T</span> <span class="variable">result</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">  <span class="keyword">for</span> (T element : <span class="built_in">this</span> stream) &#123;</span><br><span class="line">      <span class="keyword">if</span> (!foundAny) &#123;</span><br><span class="line">          foundAny = <span class="literal">true</span>;</span><br><span class="line">          result = element;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">          result = accumulator.apply(result, element);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> foundAny ? Optional.of(result) : Optional.empty();</span><br></pre></td></tr></table></figure>
+
+
+<pre><code>    如果用一个参数的重载方法去求最小值代码如下：
+</code></pre>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//        使用reduce求所有作者中年龄的最小值</span></span><br><span class="line">List&lt;Author&gt; authors = getAuthors();</span><br><span class="line">Optional&lt;Integer&gt; minOptional = authors.stream()</span><br><span class="line">        .map(author -&gt; author.getAge())</span><br><span class="line">        .reduce((result, element) -&gt; result &gt; element ? element : result);</span><br><span class="line">minOptional.ifPresent(age-&gt; System.out.println(age));</span><br></pre></td></tr></table></figure>
+<h3 id="3-5-注意事项"><a href="#3-5-注意事项" class="headerlink" title="3.5 注意事项"></a>3.5 注意事项</h3><ul>
+<li>惰性求值（如果没有终结操作，没有中间操作是不会得到执行的）</li>
+<li>流是一次性的（一旦一个流对象经过一个终结操作后。这个流就不能再被使用）</li>
+<li>不会影响原数据（我们在流中可以多数据做很多处理。但是正常情况下是不会影响原来集合中的元素的。这往往也是我们期望的）</li>
+</ul>
+]]></content>
+      <categories>
+        <category>stream流</category>
+      </categories>
+      <tags>
+        <tag>stream流</tag>
+        <tag>函数式编程</tag>
+        <tag>lambda表达式</tag>
+      </tags>
+  </entry>
+</search>
