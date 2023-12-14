@@ -42,6 +42,115 @@
       </tags>
   </entry>
   <entry>
+    <title>正则表达式</title>
+    <url>/2023/12/05/regex/</url>
+    <content><![CDATA[<h4 id="1-快速入门"><a href="#1-快速入门" class="headerlink" title="1.快速入门"></a>1.快速入门</h4><p>提取英文</p>
+<p><img src="https://pic.imgdb.cn/item/656e910cc458853aef5c8c79.jpg"></p>
+<p>提取数字<br><img src="https://pic.imgdb.cn/item/656e9128c458853aef5cd008.jpg"></p>
+<p>提取英文和数字<br><img src="https://pic.imgdb.cn/item/656e9142c458853aef5d17d6.jpg"></p>
+<h4 id="2-源码分析："><a href="#2-源码分析：" class="headerlink" title="2.源码分析："></a>2.源码分析：</h4><p>1.正则表达式中没有分组的情况</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.regex.Matcher;</span><br><span class="line"><span class="keyword">import</span> java.util.regex.Pattern;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RegTheory</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        String content=<span class="string">&quot;1998年12月8日，第二代Java平台的企业版J2EE发布。1999年6月，Sun公司发布了第二代Java平台&quot;</span> +</span><br><span class="line">                <span class="string">&quot;（简称为Java2）的3个版本：J2ME（Java2 Micro Edition，Java2平台的微型版），应用于移动、&quot;</span> +</span><br><span class="line">                <span class="string">&quot;无线及有限资源的环境；J2SE（Java 2 Standard Edition，Java 2平台的标准版），应用于桌面环境；&quot;</span> +</span><br><span class="line">                <span class="string">&quot;J2EE（Java 2Enterprise Edition，Java 2平台的企业版），应用于基于Java的应用服务器。Java 2平台的发布，&quot;</span> +</span><br><span class="line">                <span class="string">&quot;是Java发展过程中最重要的一个里程碑，标志着Java的应用开始普及。&quot;</span>;</span><br><span class="line"><span class="comment">//目标：匹配所有四个数字</span></span><br><span class="line"><span class="comment">//        说明</span></span><br><span class="line"><span class="comment">//       1. \\d 表示一个任意数字</span></span><br><span class="line">        String regStr=<span class="string">&quot;\\d\\d\\d\\d&quot;</span>;</span><br><span class="line"><span class="comment">//        创建模式对象[即正则表达式对象]</span></span><br><span class="line">        <span class="type">Pattern</span> <span class="variable">pattern</span> <span class="operator">=</span> Pattern.compile(regStr);</span><br><span class="line"><span class="comment">//        创建匹配器matcher,按照正则表达式，去匹配content</span></span><br><span class="line">        <span class="type">Matcher</span> <span class="variable">matcher</span> <span class="operator">=</span> pattern.matcher(content);</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 开始匹配</span></span><br><span class="line"><span class="comment">         * matcher.find() 所做的任务是：</span></span><br><span class="line"><span class="comment">         * 1.根据指定的规则，定位满足规则的子字符串(比如1998)</span></span><br><span class="line"><span class="comment">         * 2.找到后，将 子字符串的开始的索引记录到matcher对象中的属性      int[] groups   中;</span></span><br><span class="line"><span class="comment">         *          此时groups[0]=0,把该子字符串的结束的索引+1的值记录到groups[1]=4</span></span><br><span class="line"><span class="comment">         * 3.同时记录oldLast的值为，子该子字符串的结束的索引+1的值即4，那么下次执行find方法时，就从4开始匹配</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * matcher.group(0)分析</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * 源码</span></span><br><span class="line"><span class="comment">         *     public String group(int group) &#123;</span></span><br><span class="line"><span class="comment">         *         if (first &lt; 0)</span></span><br><span class="line"><span class="comment">         *             throw new IllegalStateException(&quot;No match found&quot;);</span></span><br><span class="line"><span class="comment">         *         if (group &lt; 0 || group &gt; groupCount())</span></span><br><span class="line"><span class="comment">         *             throw new IndexOutOfBoundsException(&quot;No group &quot; + group);</span></span><br><span class="line"><span class="comment">         *         if ((groups[group*2] == -1) || (groups[group*2+1] == -1))</span></span><br><span class="line"><span class="comment">         *             return null;</span></span><br><span class="line"><span class="comment">         *         return getSubSequence(groups[group * 2], groups[group * 2 + 1]).toString();    看这里</span></span><br><span class="line"><span class="comment">         *     &#125;</span></span><br><span class="line"><span class="comment">         *  1.根据groups[0]=0 和 groups[1]=4 记录的位置，从content开始截取子字符串返回。</span></span><br><span class="line"><span class="comment">         *      因为通过subString截取出来的时候是包含0，但是不包含索引为4这个位置的，就是[0,4)</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         *      String str =&quot;abcdef&quot;;</span></span><br><span class="line"><span class="comment">         *      执行str.substring(0,4)的结果为 abcd</span></span><br><span class="line"><span class="comment">         *-----------------------------------------------------------</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * 如果再次执行find方法，仍然按上面的进行分析:</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * 1.根据指定的规则，定位满足规则的子字符串(比如1996)</span></span><br><span class="line"><span class="comment">         * 2.找到后，将 子字符串的开始的索引记录到matcher对象中的属性      int[] groups   中;</span></span><br><span class="line"><span class="comment">         *          此时groups[0]=31,把该子字符串的结束的索引+1的值记录到groups[1]=35</span></span><br><span class="line"><span class="comment">         * 3.同时记录oldLast的值为，子该子字符串的结束的索引+1的值即35，那么下次执行find方法时，就从35开始匹配</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         *  1.根据groups[0]=31 和 groups[1]=35 记录的位置，从content开始截取子字符串返回。</span></span><br><span class="line"><span class="comment">         *      因为通过subString截取出来的时候是包含31，但是不包含索引为35这个位置的，就是[31,35)</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">while</span> (matcher.find())&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;找到了&quot;</span>+matcher.group(<span class="number">0</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>2.正则表达式中存在分组的情况</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.regex.Matcher;</span><br><span class="line"><span class="keyword">import</span> java.util.regex.Pattern;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RegTheory</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        String content=<span class="string">&quot;1998年12月8日，第二代Java平台的企业版J2EE发布。1999年6月，Sun公司发布了第二代Java平台&quot;</span> +</span><br><span class="line">                <span class="string">&quot;（简称为Java2）的3个版本：J2ME（Java2 Micro Edition，Java2平台的微型版），应用于移动、&quot;</span> +</span><br><span class="line">                <span class="string">&quot;无线及有限资源的环境；J2SE（Java 2 Standard Edition，Java 2平台的标准版），应用于桌面环境；&quot;</span> +</span><br><span class="line">                <span class="string">&quot;J2EE（Java 2Enterprise Edition，Java 2平台的企业版），应用于基于Java的应用服务器。Java 2平台的发布，&quot;</span> +</span><br><span class="line">                <span class="string">&quot;是Java发展过程中最重要的一个里程碑，标志着Java的应用开始普及。&quot;</span>;</span><br><span class="line"><span class="comment">//目标：匹配所有四个数字</span></span><br><span class="line"><span class="comment">//        说明</span></span><br><span class="line"><span class="comment">//       1. \\d 表示一个任意数字</span></span><br><span class="line">        String regStr=<span class="string">&quot;(\\d\\d)(\\d\\d)&quot;</span>;</span><br><span class="line"><span class="comment">//        创建模式对象[即正则表达式对象]</span></span><br><span class="line">        <span class="type">Pattern</span> <span class="variable">pattern</span> <span class="operator">=</span> Pattern.compile(regStr);</span><br><span class="line"><span class="comment">//        创建匹配器matcher,按照正则表达式，去匹配content</span></span><br><span class="line">        <span class="type">Matcher</span> <span class="variable">matcher</span> <span class="operator">=</span> pattern.matcher(content);</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 开始匹配</span></span><br><span class="line"><span class="comment">         * matcher.find() 所做的任务是：(考虑分组)</span></span><br><span class="line"><span class="comment">         * 什么是分组，比如(\d\d)(\d\d)，正则表达式中有()表示分组，第一个()表示第1组，第二个()表示第2组，第三个()表示第3组.........</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * 1.根据指定的规则，定位满足规则的子字符串(比如1998)</span></span><br><span class="line"><span class="comment">         * 2.找到后，将 子字符串的开始的索引记录到matcher对象中的属性      int[] groups   中;</span></span><br><span class="line"><span class="comment">         *          2.1此时groups[0]=0,把该子字符串的结束的索引+1的值记录到groups[1]=4</span></span><br><span class="line"><span class="comment">         *          2.2 记录第1组()匹配到的字符串  groups[2]=0   groups[3]=1+1     分组记录的值，结束的索引也要加+,还是substring的规则。</span></span><br><span class="line"><span class="comment">         *          2.3 记录第2组()匹配到的字符串  groups[4]=2   groups[5]=3+1</span></span><br><span class="line"><span class="comment">         * 3.同时记录oldLast的值为，子该子字符串的结束的索引+1的值即4，那么下次执行find方法时，就从4开始匹配</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * matcher.group(0)分析</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * 源码</span></span><br><span class="line"><span class="comment">         *     public String group(int group) &#123;</span></span><br><span class="line"><span class="comment">         *         if (first &lt; 0)</span></span><br><span class="line"><span class="comment">         *             throw new IllegalStateException(&quot;No match found&quot;);</span></span><br><span class="line"><span class="comment">         *         if (group &lt; 0 || group &gt; groupCount())</span></span><br><span class="line"><span class="comment">         *             throw new IndexOutOfBoundsException(&quot;No group &quot; + group);</span></span><br><span class="line"><span class="comment">         *         if ((groups[group*2] == -1) || (groups[group*2+1] == -1))</span></span><br><span class="line"><span class="comment">         *             return null;</span></span><br><span class="line"><span class="comment">         *         return getSubSequence(groups[group * 2], groups[group * 2 + 1]).toString();    看这里!!!!</span></span><br><span class="line"><span class="comment">         *     &#125;</span></span><br><span class="line"><span class="comment">         *  1.根据groups[0]=0 和 groups[1]=4 记录的位置，从content开始截取子字符串返回。</span></span><br><span class="line"><span class="comment">         *      因为通过subString截取出来的时候是包含0，但是不包含索引为4这个位置的，就是[0,4)</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         *      String str =&quot;abcdef&quot;;</span></span><br><span class="line"><span class="comment">         *      执行str.substring(0,4)的结果为 abcd</span></span><br><span class="line"><span class="comment">         *-----------------------------------------------------------</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * 如果再次执行find方法，仍然按上面的进行分析:</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * 1.根据指定的规则，定位满足规则的子字符串(比如1996)</span></span><br><span class="line"><span class="comment">         * 2.找到后，将 子字符串的开始的索引记录到matcher对象中的属性      int[] groups   中;</span></span><br><span class="line"><span class="comment">         *          此时groups[0]=31,把该子字符串的结束的索引+1的值记录到groups[1]=35</span></span><br><span class="line"><span class="comment">         * 3.同时记录oldLast的值为，子该子字符串的结束的索引+1的值即35，那么下次执行find方法时，就从35开始匹配</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         *  1.根据groups[0]=31 和 groups[1]=35 记录的位置，从content开始截取子字符串返回。</span></span><br><span class="line"><span class="comment">         *      因为通过subString截取出来的时候是包含31，但是不包含索引为35这个位置的，就是[31,35)</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">while</span> (matcher.find())&#123;</span><br><span class="line">            <span class="comment">/**</span></span><br><span class="line"><span class="comment">             * 小结：</span></span><br><span class="line"><span class="comment">             * 1.如果正则表达式有()分组</span></span><br><span class="line"><span class="comment">             * 2.取出匹配的字符串规则如下</span></span><br><span class="line"><span class="comment">             * 3.group(0)表示匹配到的子字符串</span></span><br><span class="line"><span class="comment">             * 4.group(1)表示匹配到的子字符串的第一组</span></span><br><span class="line"><span class="comment">             * 5.group(2)表示匹配到的子字符串第二组</span></span><br><span class="line"><span class="comment">             * 6.但是分组数不能越界。</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            System.out.println(<span class="string">&quot;找到了&quot;</span>+matcher.group(<span class="number">0</span>));</span><br><span class="line">            System.out.println(<span class="string">&quot;第一组小括号取到的值&quot;</span>+matcher.group(<span class="number">1</span>));</span><br><span class="line">            System.out.println(<span class="string">&quot;第二组小括号取到的值&quot;</span>+matcher.group(<span class="number">2</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="3-正则表达式语法"><a href="#3-正则表达式语法" class="headerlink" title="3.正则表达式语法"></a>3.正则表达式语法</h4><p>3.1元字符-转义符\</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">需要用到转义符号的字符有：  . * + ( ) $ / \ ? [ ] ^ &#123; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>3.2元字符-字符匹配符</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+<th>示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>[ ]</td>
+<td>可接收的字符列表</td>
+<td>[efgh]</td>
+<td>e、f、g、h中的***<u>任意一个</u>***字符</td>
+</tr>
+<tr>
+<td>[ ^ ]</td>
+<td>不接收的字符列表</td>
+<td>[^abc]</td>
+<td>除a、b、c之外的***<u>任意一个</u>***字符，包括数字和特殊符号</td>
+</tr>
+<tr>
+<td>-</td>
+<td>连字符</td>
+<td>A-Z</td>
+<td>任意单个大写字母</td>
+</tr>
+<tr>
+<td>.</td>
+<td>匹配除\n 以外的任何字符。如果要匹配.本身那就需要使用\\.</td>
+<td>a..b</td>
+<td>以a开头，b结尾，中间包括2个任意字</td>
+</tr>
+<tr>
+<td>\\d</td>
+<td>匹配单个数字字符，相当于[0-9]</td>
+<td>\\d{3}(\\d)?</td>
+<td>包含3个或4个数字的字符串</td>
+</tr>
+<tr>
+<td>\\D</td>
+<td>匹配单个非数字字符，相当于[^0-9]</td>
+<td>\\D(\\d)*</td>
+<td>以单个非数字字符开头，后接任意个数字字符串</td>
+</tr>
+<tr>
+<td>\\w</td>
+<td>匹配单个数字、大小写字母、下划线字符,相当于[0-9a-zA-Z]</td>
+<td>\\d{3}\\w{4}</td>
+<td>以3个数字字符开头的,长度为7的数字字母字符串</td>
+</tr>
+<tr>
+<td>\\W</td>
+<td>匹配单个非数字、大小写字母字符，相当于[^0-9a-zA-Z]</td>
+<td>\\W+\\d{2}</td>
+<td>以至少1个非数字字母字符开头，2个数字字符结尾的字符串</td>
+</tr>
+<tr>
+<td>\\s</td>
+<td>匹配任何空白字符(空格、制表符等)</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>\\S</td>
+<td>匹配任何非空白字符(空格、制表符等)</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>​	Java正则表达式默认是区分字母大小写的，如何实现不区分大小写？</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.regex.Matcher;</span><br><span class="line"><span class="keyword">import</span> java.util.regex.Pattern;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RegExp03</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">content</span> <span class="operator">=</span><span class="string">&quot;abc1123ABC&quot;</span>;</span><br><span class="line"><span class="comment">//        String regStr = &quot;abc&quot;;//1.匹配abc字符串  默认区分大小写</span></span><br><span class="line"><span class="comment">//        String regStr = &quot;(?i)abc&quot;;//2.匹配abc字符串  不区分大小写</span></span><br><span class="line"><span class="comment">//        String regStr = &quot;a(?i)bc&quot;;//3.匹配abc字符串  b、c不区分大小写</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">regStr</span> <span class="operator">=</span> <span class="string">&quot;a((?i)b)c&quot;</span>;<span class="comment">//4.匹配abc字符串  只有b不区分大小写</span></span><br><span class="line">        <span class="type">Pattern</span> <span class="variable">pattern</span> <span class="operator">=</span> Pattern.compile(regStr);</span><br><span class="line">        <span class="type">Matcher</span> <span class="variable">matcher</span> <span class="operator">=</span> pattern.matcher(content);</span><br><span class="line">        <span class="keyword">while</span> (matcher.find())&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;找到了&quot;</span>+ matcher.group(<span class="number">0</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>或者：在创建正则表达式对象的时候就注入参数      (INSENSITIVE   不敏感的)</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">Pattern</span> <span class="variable">pattern</span> <span class="operator">=</span> Pattern.compile(regStr,Pattern.CASE_INSENSITIVE);</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>未完待续………..</p>
+]]></content>
+      <categories>
+        <category>正则表达式</category>
+      </categories>
+      <tags>
+        <tag>正则表达式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java基础</title>
     <url>/2023/11/22/java/</url>
     <content><![CDATA[<h1 id="八大基本类型"><a href="#八大基本类型" class="headerlink" title="八大基本类型"></a>八大基本类型</h1><p><img src="https://pic.imgdb.cn/item/656156bfc458853aef59bc3d.jpg"></p>
@@ -181,115 +290,6 @@
       <tags>
         <tag>Java</tag>
         <tag>IO流</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>正则表达式</title>
-    <url>/2023/12/05/regex/</url>
-    <content><![CDATA[<h4 id="1-快速入门"><a href="#1-快速入门" class="headerlink" title="1.快速入门"></a>1.快速入门</h4><p>提取英文</p>
-<p><img src="https://pic.imgdb.cn/item/656e910cc458853aef5c8c79.jpg"></p>
-<p>提取数字<br><img src="https://pic.imgdb.cn/item/656e9128c458853aef5cd008.jpg"></p>
-<p>提取英文和数字<br><img src="https://pic.imgdb.cn/item/656e9142c458853aef5d17d6.jpg"></p>
-<h4 id="2-源码分析："><a href="#2-源码分析：" class="headerlink" title="2.源码分析："></a>2.源码分析：</h4><p>1.正则表达式中没有分组的情况</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.regex.Matcher;</span><br><span class="line"><span class="keyword">import</span> java.util.regex.Pattern;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RegTheory</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        String content=<span class="string">&quot;1998年12月8日，第二代Java平台的企业版J2EE发布。1999年6月，Sun公司发布了第二代Java平台&quot;</span> +</span><br><span class="line">                <span class="string">&quot;（简称为Java2）的3个版本：J2ME（Java2 Micro Edition，Java2平台的微型版），应用于移动、&quot;</span> +</span><br><span class="line">                <span class="string">&quot;无线及有限资源的环境；J2SE（Java 2 Standard Edition，Java 2平台的标准版），应用于桌面环境；&quot;</span> +</span><br><span class="line">                <span class="string">&quot;J2EE（Java 2Enterprise Edition，Java 2平台的企业版），应用于基于Java的应用服务器。Java 2平台的发布，&quot;</span> +</span><br><span class="line">                <span class="string">&quot;是Java发展过程中最重要的一个里程碑，标志着Java的应用开始普及。&quot;</span>;</span><br><span class="line"><span class="comment">//目标：匹配所有四个数字</span></span><br><span class="line"><span class="comment">//        说明</span></span><br><span class="line"><span class="comment">//       1. \\d 表示一个任意数字</span></span><br><span class="line">        String regStr=<span class="string">&quot;\\d\\d\\d\\d&quot;</span>;</span><br><span class="line"><span class="comment">//        创建模式对象[即正则表达式对象]</span></span><br><span class="line">        <span class="type">Pattern</span> <span class="variable">pattern</span> <span class="operator">=</span> Pattern.compile(regStr);</span><br><span class="line"><span class="comment">//        创建匹配器matcher,按照正则表达式，去匹配content</span></span><br><span class="line">        <span class="type">Matcher</span> <span class="variable">matcher</span> <span class="operator">=</span> pattern.matcher(content);</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 开始匹配</span></span><br><span class="line"><span class="comment">         * matcher.find() 所做的任务是：</span></span><br><span class="line"><span class="comment">         * 1.根据指定的规则，定位满足规则的子字符串(比如1998)</span></span><br><span class="line"><span class="comment">         * 2.找到后，将 子字符串的开始的索引记录到matcher对象中的属性      int[] groups   中;</span></span><br><span class="line"><span class="comment">         *          此时groups[0]=0,把该子字符串的结束的索引+1的值记录到groups[1]=4</span></span><br><span class="line"><span class="comment">         * 3.同时记录oldLast的值为，子该子字符串的结束的索引+1的值即4，那么下次执行find方法时，就从4开始匹配</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * matcher.group(0)分析</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * 源码</span></span><br><span class="line"><span class="comment">         *     public String group(int group) &#123;</span></span><br><span class="line"><span class="comment">         *         if (first &lt; 0)</span></span><br><span class="line"><span class="comment">         *             throw new IllegalStateException(&quot;No match found&quot;);</span></span><br><span class="line"><span class="comment">         *         if (group &lt; 0 || group &gt; groupCount())</span></span><br><span class="line"><span class="comment">         *             throw new IndexOutOfBoundsException(&quot;No group &quot; + group);</span></span><br><span class="line"><span class="comment">         *         if ((groups[group*2] == -1) || (groups[group*2+1] == -1))</span></span><br><span class="line"><span class="comment">         *             return null;</span></span><br><span class="line"><span class="comment">         *         return getSubSequence(groups[group * 2], groups[group * 2 + 1]).toString();    看这里</span></span><br><span class="line"><span class="comment">         *     &#125;</span></span><br><span class="line"><span class="comment">         *  1.根据groups[0]=0 和 groups[1]=4 记录的位置，从content开始截取子字符串返回。</span></span><br><span class="line"><span class="comment">         *      因为通过subString截取出来的时候是包含0，但是不包含索引为4这个位置的，就是[0,4)</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         *      String str =&quot;abcdef&quot;;</span></span><br><span class="line"><span class="comment">         *      执行str.substring(0,4)的结果为 abcd</span></span><br><span class="line"><span class="comment">         *-----------------------------------------------------------</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * 如果再次执行find方法，仍然按上面的进行分析:</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * 1.根据指定的规则，定位满足规则的子字符串(比如1996)</span></span><br><span class="line"><span class="comment">         * 2.找到后，将 子字符串的开始的索引记录到matcher对象中的属性      int[] groups   中;</span></span><br><span class="line"><span class="comment">         *          此时groups[0]=31,把该子字符串的结束的索引+1的值记录到groups[1]=35</span></span><br><span class="line"><span class="comment">         * 3.同时记录oldLast的值为，子该子字符串的结束的索引+1的值即35，那么下次执行find方法时，就从35开始匹配</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         *  1.根据groups[0]=31 和 groups[1]=35 记录的位置，从content开始截取子字符串返回。</span></span><br><span class="line"><span class="comment">         *      因为通过subString截取出来的时候是包含31，但是不包含索引为35这个位置的，就是[31,35)</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">while</span> (matcher.find())&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;找到了&quot;</span>+matcher.group(<span class="number">0</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>2.正则表达式中存在分组的情况</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.regex.Matcher;</span><br><span class="line"><span class="keyword">import</span> java.util.regex.Pattern;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RegTheory</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        String content=<span class="string">&quot;1998年12月8日，第二代Java平台的企业版J2EE发布。1999年6月，Sun公司发布了第二代Java平台&quot;</span> +</span><br><span class="line">                <span class="string">&quot;（简称为Java2）的3个版本：J2ME（Java2 Micro Edition，Java2平台的微型版），应用于移动、&quot;</span> +</span><br><span class="line">                <span class="string">&quot;无线及有限资源的环境；J2SE（Java 2 Standard Edition，Java 2平台的标准版），应用于桌面环境；&quot;</span> +</span><br><span class="line">                <span class="string">&quot;J2EE（Java 2Enterprise Edition，Java 2平台的企业版），应用于基于Java的应用服务器。Java 2平台的发布，&quot;</span> +</span><br><span class="line">                <span class="string">&quot;是Java发展过程中最重要的一个里程碑，标志着Java的应用开始普及。&quot;</span>;</span><br><span class="line"><span class="comment">//目标：匹配所有四个数字</span></span><br><span class="line"><span class="comment">//        说明</span></span><br><span class="line"><span class="comment">//       1. \\d 表示一个任意数字</span></span><br><span class="line">        String regStr=<span class="string">&quot;(\\d\\d)(\\d\\d)&quot;</span>;</span><br><span class="line"><span class="comment">//        创建模式对象[即正则表达式对象]</span></span><br><span class="line">        <span class="type">Pattern</span> <span class="variable">pattern</span> <span class="operator">=</span> Pattern.compile(regStr);</span><br><span class="line"><span class="comment">//        创建匹配器matcher,按照正则表达式，去匹配content</span></span><br><span class="line">        <span class="type">Matcher</span> <span class="variable">matcher</span> <span class="operator">=</span> pattern.matcher(content);</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 开始匹配</span></span><br><span class="line"><span class="comment">         * matcher.find() 所做的任务是：(考虑分组)</span></span><br><span class="line"><span class="comment">         * 什么是分组，比如(\d\d)(\d\d)，正则表达式中有()表示分组，第一个()表示第1组，第二个()表示第2组，第三个()表示第3组.........</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * 1.根据指定的规则，定位满足规则的子字符串(比如1998)</span></span><br><span class="line"><span class="comment">         * 2.找到后，将 子字符串的开始的索引记录到matcher对象中的属性      int[] groups   中;</span></span><br><span class="line"><span class="comment">         *          2.1此时groups[0]=0,把该子字符串的结束的索引+1的值记录到groups[1]=4</span></span><br><span class="line"><span class="comment">         *          2.2 记录第1组()匹配到的字符串  groups[2]=0   groups[3]=1+1     分组记录的值，结束的索引也要加+,还是substring的规则。</span></span><br><span class="line"><span class="comment">         *          2.3 记录第2组()匹配到的字符串  groups[4]=2   groups[5]=3+1</span></span><br><span class="line"><span class="comment">         * 3.同时记录oldLast的值为，子该子字符串的结束的索引+1的值即4，那么下次执行find方法时，就从4开始匹配</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * matcher.group(0)分析</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * 源码</span></span><br><span class="line"><span class="comment">         *     public String group(int group) &#123;</span></span><br><span class="line"><span class="comment">         *         if (first &lt; 0)</span></span><br><span class="line"><span class="comment">         *             throw new IllegalStateException(&quot;No match found&quot;);</span></span><br><span class="line"><span class="comment">         *         if (group &lt; 0 || group &gt; groupCount())</span></span><br><span class="line"><span class="comment">         *             throw new IndexOutOfBoundsException(&quot;No group &quot; + group);</span></span><br><span class="line"><span class="comment">         *         if ((groups[group*2] == -1) || (groups[group*2+1] == -1))</span></span><br><span class="line"><span class="comment">         *             return null;</span></span><br><span class="line"><span class="comment">         *         return getSubSequence(groups[group * 2], groups[group * 2 + 1]).toString();    看这里!!!!</span></span><br><span class="line"><span class="comment">         *     &#125;</span></span><br><span class="line"><span class="comment">         *  1.根据groups[0]=0 和 groups[1]=4 记录的位置，从content开始截取子字符串返回。</span></span><br><span class="line"><span class="comment">         *      因为通过subString截取出来的时候是包含0，但是不包含索引为4这个位置的，就是[0,4)</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         *      String str =&quot;abcdef&quot;;</span></span><br><span class="line"><span class="comment">         *      执行str.substring(0,4)的结果为 abcd</span></span><br><span class="line"><span class="comment">         *-----------------------------------------------------------</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * 如果再次执行find方法，仍然按上面的进行分析:</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * 1.根据指定的规则，定位满足规则的子字符串(比如1996)</span></span><br><span class="line"><span class="comment">         * 2.找到后，将 子字符串的开始的索引记录到matcher对象中的属性      int[] groups   中;</span></span><br><span class="line"><span class="comment">         *          此时groups[0]=31,把该子字符串的结束的索引+1的值记录到groups[1]=35</span></span><br><span class="line"><span class="comment">         * 3.同时记录oldLast的值为，子该子字符串的结束的索引+1的值即35，那么下次执行find方法时，就从35开始匹配</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         *  1.根据groups[0]=31 和 groups[1]=35 记录的位置，从content开始截取子字符串返回。</span></span><br><span class="line"><span class="comment">         *      因为通过subString截取出来的时候是包含31，但是不包含索引为35这个位置的，就是[31,35)</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">while</span> (matcher.find())&#123;</span><br><span class="line">            <span class="comment">/**</span></span><br><span class="line"><span class="comment">             * 小结：</span></span><br><span class="line"><span class="comment">             * 1.如果正则表达式有()分组</span></span><br><span class="line"><span class="comment">             * 2.取出匹配的字符串规则如下</span></span><br><span class="line"><span class="comment">             * 3.group(0)表示匹配到的子字符串</span></span><br><span class="line"><span class="comment">             * 4.group(1)表示匹配到的子字符串的第一组</span></span><br><span class="line"><span class="comment">             * 5.group(2)表示匹配到的子字符串第二组</span></span><br><span class="line"><span class="comment">             * 6.但是分组数不能越界。</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            System.out.println(<span class="string">&quot;找到了&quot;</span>+matcher.group(<span class="number">0</span>));</span><br><span class="line">            System.out.println(<span class="string">&quot;第一组小括号取到的值&quot;</span>+matcher.group(<span class="number">1</span>));</span><br><span class="line">            System.out.println(<span class="string">&quot;第二组小括号取到的值&quot;</span>+matcher.group(<span class="number">2</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="3-正则表达式语法"><a href="#3-正则表达式语法" class="headerlink" title="3.正则表达式语法"></a>3.正则表达式语法</h4><p>3.1元字符-转义符\</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">需要用到转义符号的字符有：  . * + ( ) $ / \ ? [ ] ^ &#123; &#125;</span><br></pre></td></tr></table></figure>
-
-<p>3.2元字符-字符匹配符</p>
-<table>
-<thead>
-<tr>
-<th>符号</th>
-<th>含义</th>
-<th>示例</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>[ ]</td>
-<td>可接收的字符列表</td>
-<td>[efgh]</td>
-<td>e、f、g、h中的***<u>任意一个</u>***字符</td>
-</tr>
-<tr>
-<td>[ ^ ]</td>
-<td>不接收的字符列表</td>
-<td>[^abc]</td>
-<td>除a、b、c之外的***<u>任意一个</u>***字符，包括数字和特殊符号</td>
-</tr>
-<tr>
-<td>-</td>
-<td>连字符</td>
-<td>A-Z</td>
-<td>任意单个大写字母</td>
-</tr>
-<tr>
-<td>.</td>
-<td>匹配除\n 以外的任何字符。如果要匹配.本身那就需要使用\\.</td>
-<td>a..b</td>
-<td>以a开头，b结尾，中间包括2个任意字</td>
-</tr>
-<tr>
-<td>\\d</td>
-<td>匹配单个数字字符，相当于[0-9]</td>
-<td>\\d{3}(\\d)?</td>
-<td>包含3个或4个数字的字符串</td>
-</tr>
-<tr>
-<td>\\D</td>
-<td>匹配单个非数字字符，相当于[^0-9]</td>
-<td>\\D(\\d)*</td>
-<td>以单个非数字字符开头，后接任意个数字字符串</td>
-</tr>
-<tr>
-<td>\\w</td>
-<td>匹配单个数字、大小写字母、下划线字符,相当于[0-9a-zA-Z]</td>
-<td>\\d{3}\\w{4}</td>
-<td>以3个数字字符开头的,长度为7的数字字母字符串</td>
-</tr>
-<tr>
-<td>\\W</td>
-<td>匹配单个非数字、大小写字母字符，相当于[^0-9a-zA-Z]</td>
-<td>\\W+\\d{2}</td>
-<td>以至少1个非数字字母字符开头，2个数字字符结尾的字符串</td>
-</tr>
-<tr>
-<td>\\s</td>
-<td>匹配任何空白字符(空格、制表符等)</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>\\S</td>
-<td>匹配任何非空白字符(空格、制表符等)</td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<p>​	Java正则表达式默认是区分字母大小写的，如何实现不区分大小写？</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.regex.Matcher;</span><br><span class="line"><span class="keyword">import</span> java.util.regex.Pattern;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RegExp03</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">content</span> <span class="operator">=</span><span class="string">&quot;abc1123ABC&quot;</span>;</span><br><span class="line"><span class="comment">//        String regStr = &quot;abc&quot;;//1.匹配abc字符串  默认区分大小写</span></span><br><span class="line"><span class="comment">//        String regStr = &quot;(?i)abc&quot;;//2.匹配abc字符串  不区分大小写</span></span><br><span class="line"><span class="comment">//        String regStr = &quot;a(?i)bc&quot;;//3.匹配abc字符串  b、c不区分大小写</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">regStr</span> <span class="operator">=</span> <span class="string">&quot;a((?i)b)c&quot;</span>;<span class="comment">//4.匹配abc字符串  只有b不区分大小写</span></span><br><span class="line">        <span class="type">Pattern</span> <span class="variable">pattern</span> <span class="operator">=</span> Pattern.compile(regStr);</span><br><span class="line">        <span class="type">Matcher</span> <span class="variable">matcher</span> <span class="operator">=</span> pattern.matcher(content);</span><br><span class="line">        <span class="keyword">while</span> (matcher.find())&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;找到了&quot;</span>+ matcher.group(<span class="number">0</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>或者：在创建正则表达式对象的时候就注入参数      (INSENSITIVE   不敏感的)</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">Pattern</span> <span class="variable">pattern</span> <span class="operator">=</span> Pattern.compile(regStr,Pattern.CASE_INSENSITIVE);</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<p>未完待续………..</p>
-]]></content>
-      <categories>
-        <category>正则表达式</category>
-      </categories>
-      <tags>
-        <tag>正则表达式</tag>
       </tags>
   </entry>
   <entry>
